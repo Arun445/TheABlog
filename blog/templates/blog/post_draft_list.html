@@ -3,15 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
-
 </head>
-
-
-
 <body>
-
-<a href="{% url 'post_new' %}">Create a new post</a>
 
 {% for post in posts %}
     <small>{{ post.date }}</small>
@@ -19,6 +12,4 @@
     <h3>{{ post.text }}</h3>
 {% endfor %}
 </body>
-
-
 </html>
