@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 
+from blog.models import Post
 from .forms import SignUpForm
 # Create your views here.
 
@@ -19,7 +20,8 @@ def signup(request):
 
 def profile(request, pk):
     user = User.objects.get(pk=pk)
-    return render(request, 'user/profile.html', {'user': user})
+    post = Post.objects.filter(user=pk)
+    return render(request, 'user/profile.html', {'user': user, 'post': post})
 
 
 

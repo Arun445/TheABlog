@@ -3,6 +3,9 @@
 
 {% block content %}
 
+<div class="listing container">
+
+
 {% for post in posts %}
 <div class="content-section row">
             <div class="col-1">
@@ -19,7 +22,10 @@
             <p class="article-content">{{ post.text }}</p>
     </div>
     <div class="comment-section">
-        comments Likes
+        <form action="{% url 'post_likes' pk=post.pk %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" name="post_id" value="{{ post.id }}" class='btn btn-primary'>like</button>
+        </form>
     </div>
 </div>
 
@@ -27,7 +33,7 @@
 
 {% endfor %}
 
-
+</div>
 {% endblock %}
 
 

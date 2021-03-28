@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+
+
 from .models import Post
 from.forms import PostForm
 
@@ -59,4 +61,9 @@ def post_update(request, pk):
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
+    return redirect('post_list')
+
+def post_likes(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.likes.add(request.user)
     return redirect('post_list')
