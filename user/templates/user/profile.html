@@ -3,7 +3,7 @@
 
 {% block content %}
 
-{% for post in posts %}
+
 <div class="content-section row">
             <div class="col-1">
             <img src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png"
@@ -11,21 +11,17 @@
                 </div>
     <div class="col-11">
         <div class="article-metadata">
-            <a  href="">{{post.user}}</a>
-            <small class=" text-muted">{{ post.date }}</small>
+            <a  href="">{{user.username}}</a>
         </div>
 
-        <a class="article-title " href="{% url 'post_detail' pk=post.pk %}"><h1>{{ post.title }}</h1></a>
-            <p class="article-content">{{ post.text }}</p>
-    </div>
-    <div class="comment-section">
-        comments Likes
+        <a class="article-title " href=""><h1></h1></a>
+            <p class="article-content">{{ user.email }}</p>
     </div>
 </div>
 
 
 
-{% endfor %}
+
 
 
 {% endblock %}

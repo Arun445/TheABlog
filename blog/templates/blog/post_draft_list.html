@@ -1,15 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'blog/base.html' %}
+
+
+{% block content %}
+
+
+
 
 {% for post in posts %}
-    <small>{{ post.date }}</small>
-<a href="{% url 'post_detail' pk=post.pk %}"><h1>{{ post.title }}</h1></a>
-    <h3>{{ post.text }}</h3>
+<div class="content-section row">
+            <div class="col-1">
+            <img src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png"
+         class="user-image">
+                </div>
+    <div class="col-11">
+        <div class="article-metadata">
+            <a  href="">{{post.user}}</a>
+            <small class=" text-muted">{{ post.date }}</small>
+        </div>
+
+        <a class="article-title " href="{% url 'post_detail' pk=post.pk %}"><h1>{{ post.title }}</h1></a>
+            <p class="article-content">{{ post.text }}</p>
+    </div>
+
+    </div>
+
+
 {% endfor %}
-</body>
-</html>
+
+
+
+{% endblock %}

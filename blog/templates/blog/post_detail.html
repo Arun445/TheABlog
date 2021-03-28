@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'blog/base.html' %}
+
+
+{% block content %}
+{% load crispy_forms_tags %}
+
 
 
 {{ post.title }}
 <h2>{{ post.text }}</h2>
 
 
-</body>
-</html>
+
+{% endblock %}
+

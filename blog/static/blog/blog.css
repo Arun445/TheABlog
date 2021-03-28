@@ -1,0 +1,126 @@
+.nav_bar {
+    width: 80%;
+}
+
+.navbar {
+    margin-bottom: 30px;
+
+}
+
+.navbar button {
+border-radius: 20px;
+}
+
+
+body {
+    background: #fafafa;
+    color: #333333;
+    text-decoration: none;
+}
+
+a {
+   text-decoration: none;
+   color: #4169E1;
+}
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 2px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+
+.comment-section {
+ padding-bottom: 1px;
+  margin-bottom: 4px;
+  border-top: 1px solid #e3e3e3
+}
+
+.listing {
+    width: 50%;
+}
+
+.article-metadata {
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #e3e3e3
+}
+
+.article-title {
+  color: #444444;
+}
+
+.article-content {
+  white-space: pre-line;
+}
+
+.d-flex {
+    border:solid black 1px;
+}
+
+
+.user-image {
+    height: 50px;
+    width: 50px;
+    border-radius: 40px;
+}
+
+.sign-up-form {
+    text-align:center;
+
+    padding-top:20px;
+    margin: auto;
+    max-width: 80%;
+}
+
+.log-in {
+    text-align:center;
+    padding-top:20px;
+    margin: auto;
+    max-width: 60%;
+}
+
+.log-in input {
+
+ padding: 10px;
+}
+
+.form-group {
+
+text-align: left;
+}
+
+.log_in_btn {
+
+    padding: 10px;
+    border-radius: 40px;
+    width:80%;
+
+
+}
+.up {
+    padding-top: 20px;
+}
+
+.dropdown {
+    padding-left: 50px;
+}
+
+.sign-up button {
+    background: #A52A2A;
+
+}
+
+.sign-up button:hover {
+    background: #C60606;
+}
+
+.sign-in button {
+color: white
+}
+
+.sign-in button:hover {
+    color:#B0E0E6;
+}
