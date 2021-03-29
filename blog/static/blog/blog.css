@@ -136,3 +136,18 @@ color: white
 .sign-in button:hover {
     color:#B0E0E6;
 }
+
+.thumbs-up {
+    color: red;
+}
+
+.like {
+    background-color: transparent !important;
+}
+
+
+
+
+
+
+

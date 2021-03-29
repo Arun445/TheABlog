@@ -15,16 +15,25 @@
     <div class="col-11">
         <div class="article-metadata">
             <a  href="">{{post.user}}</a>
-            <small class=" text-muted">{{ post.date }}</small>
+            <small class=" text-muted">{{ post.created }}</small>
         </div>
 
         <a class="article-title " href="{% url 'post_detail' pk=post.pk %}"><h1>{{ post.title }}</h1></a>
             <p class="article-content">{{ post.text }}</p>
     </div>
     <div class="comment-section">
-        <form action="{% url 'post_likes' pk=post.pk %}" method="POST">
+        <div class="like-count{{ post.id }}">{{ post.number_of_likes }}</div>
+        <form action="{% url 'post_likes' %}" method="POST" class="like-form" id="{{ post.id }}">
             {% csrf_token %}
-            <button type="submit" name="post_id" value="{{ post.id }}" class='btn btn-primary'>like</button>
+            <input type="hidden" name="post_id" value="{{ post.id }}">
+            <button type="submit" name="post_id" value="{{ post.id }}" class='like btn like-btn{{post.id}}'>
+                {% if profile not in post.likes.all %}
+                    Like
+                {% else %}
+                    Unlike
+                {% endif %}
+
+            </button>
         </form>
     </div>
 </div>
@@ -37,7 +46,51 @@
 {% endblock %}
 
 
+{% block scripts %}
+<script>
+    $( document ).ready(function() {
+         let display = false
+            $('.like-form').submit(function(e){
+                e.preventDefault()
 
+                const post_id = $(this).attr('id')
+
+                const likeTest = $(`.like-btn${post_id}`).text()
+
+                const trim = $.trim(likeTest)
+
+                const url = $(this).attr('action')
+
+                let res;
+                const likes = $(`.like-count${post_id}`).text()
+                const trimCount = parseInt(likes)
+
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                         'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                         'post_id': post_id,
+                    },
+                    success: function(response) {
+                        if(trim == 'Unlike') {
+                            $(`.like-btn${post_id}`).text('Like')
+                            res = trimCount - 1
+                        } else {
+                            $(`.like-btn${post_id}`).text('Unlike')
+                            res = trimCount + 1
+                        }
+
+                        $(`.like-count${post_id}`).text(res)
+                    },
+                    error: function(response) {
+                        console.log('error', response)
+                    }
+                })
+    })
+ });
+</script>
+{% endblock scripts %}
 
 
 
