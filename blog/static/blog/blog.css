@@ -138,13 +138,20 @@ color: white
 }
 
 .thumbs-up {
-    color: red;
+    color: blue;
+}
+.thumbs-down {
+    color: black;
 }
 
 .like {
     background-color: transparent !important;
 }
 
+.fas {
+    padding-left: 10px;
+
+}
 
 
 

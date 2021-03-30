@@ -26,11 +26,11 @@
         <form action="{% url 'post_likes' %}" method="POST" class="like-form" id="{{ post.id }}">
             {% csrf_token %}
             <input type="hidden" name="post_id" value="{{ post.id }}">
-            <button type="submit" name="post_id" value="{{ post.id }}" class='like btn like-btn{{post.id}}'>
+            <button type="submit" name="post_id" value="{{ post.id }}" class='btn btn-outline-primary like-btn{{post.id}}'>
                 {% if profile not in post.likes.all %}
-                    Like
+                    <text class="thumbs-down" >Like</text><i class="thumbs-down fas fa-thumbs-up"></i>
                 {% else %}
-                    Unlike
+                    Unlike<i class="thumbs-up fas fa-thumbs-up"></i>
                 {% endif %}
 
             </button>
@@ -58,7 +58,7 @@
                 const likeTest = $(`.like-btn${post_id}`).text()
 
                 const trim = $.trim(likeTest)
-
+                console.log(trim)
                 const url = $(this).attr('action')
 
                 let res;
@@ -74,10 +74,14 @@
                     },
                     success: function(response) {
                         if(trim == 'Unlike') {
-                            $(`.like-btn${post_id}`).text('Like')
+                            $(`.like-btn${post_id}`).text('Like').css({"color": "black" });
+                            $(`.like-btn${post_id}`).append('<i class="fas fa-thumbs-up"></i>')
+
                             res = trimCount - 1
                         } else {
-                            $(`.like-btn${post_id}`).text('Unlike')
+                            $(`.like-btn${post_id}`).text('Unlike').css({"color": "blue"});
+                            $(`.like-btn${post_id}`).append('<i class=" fas fa-thumbs-up"></i>')
+
                             res = trimCount + 1
                         }
 

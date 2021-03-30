@@ -93,10 +93,9 @@ def like_unlike_post(request):
             post.save()
             like.save()
 
-       # data = {
-        #    'value': like.value,
-       #     'likes': post.likes.all().count()
-       # }
-        #return JsonResponse(data, safe=False)
 
     return redirect('post_list')
+
+
+def add_comment(request):
+    pass

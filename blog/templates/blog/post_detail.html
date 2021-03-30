@@ -6,12 +6,36 @@
 
 <div class="listing container">
 
+    <div class="col-sm">
+        <div class="article-metadata">
+            <a  href="">{{post.user}}</a>
+            <small class=" text-muted">{{ post.created }}</small>
+        </div>
+
+        <a class="article-title " href="{% url 'post_detail' pk=post.pk %}"><h1>{{ post.title }}</h1></a>
+            <p class="article-content">{{ post.text }}</p>
+    </div>
 
 
-{{ post.title }}
-<h2>{{ post.text }}</h2>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
+    <div class="content-section row">
+
+    <div class="col-12">
+        <div class="article-metadata">
+            <a  href="">{{post.user}}</a>
+            <small class=" text-muted">{{ post.created }}</small>
+        </div>
+
+            <p class="article-content">{{ post.text }}</p>
+    </div>
 </div>
+</div>
+
 
 {% endblock %}
 
