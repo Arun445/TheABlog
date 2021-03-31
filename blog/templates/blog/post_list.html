@@ -22,7 +22,8 @@
             <p class="article-content">{{ post.text }}</p>
     </div>
     <div class="comment-section">
-        <div class="like-count{{ post.id }}">{{ post.number_of_likes }}</div>
+        <div class="like-count{{ post.id }}">{{ post.number_of_likes }} likes</div>
+        {% if user.is_authenticated %}
         <form action="{% url 'post_likes' %}" method="POST" class="like-form" id="{{ post.id }}">
             {% csrf_token %}
             <input type="hidden" name="post_id" value="{{ post.id }}">
@@ -35,6 +36,7 @@
 
             </button>
         </form>
+        {% endif %}
     </div>
 </div>
 

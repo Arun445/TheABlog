@@ -27,17 +27,16 @@
       </form>-->
       {% if user.is_authenticated %}
       <div class="dropdown">
-          <img src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png"
-         class="user-nav-image dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="like" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><img class="user-nav-image" src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png"></button>
 
 
   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
     <li><a class="dropdown-item" href="{% url 'post_new' %}">Create a new blog</a></li>
     <li><a class="dropdown-item" href="{% url 'profile' pk=user.pk %}">My profile</a></li>
     <li><a class="dropdown-item" href="{% url 'post_draft_list' users_id=user.id %}">My draft list</a></li>
-    <li><a class="dropdown-item" href="">My blogs</a></li>
+    <li><a class="dropdown-item" href="{% url 'users_posts' users_id=user.id %}">My blogs</a></li>
     <li><hr class="dropdown-divider"></li>
-    <li><a class="dropdown-item" href="{% url 'logout' %}">logout</a></li>
+    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
   </ul>
 
     </div>

@@ -14,6 +14,10 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def publish(self):
+        self.published = True
+        self.save()
+
     def number_of_likes(self):
         return self.likes.all().count()
 
@@ -24,10 +28,16 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
-    updated = models.DateTimeField(auto_now=True)
+    updated = models.DateTimeField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
 
+    def approve(self):
+        self.approved = True
+        self.save()
+
+    def __str__(self):
+        return self.text
 
 LIKE_CHOICES = (
     ('Like', 'Like'),
