@@ -3,9 +3,23 @@
 
 {% block content %}
 
+<div class="listing container mt-3">
+    <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title h5-center">{{user}}</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+  </div>
+         <img src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png" class="user-image-bg" alt="...">
+</div>
+</div>
+
+<br>
+<br>
 
 <div class="listing container">
-    <h1>{{user}}</h1>
+    <h1 class="h1-center">Posts by {{user}}</h1>
+    <hr>
 
     {% for post in posts %}
         <div class="content-section row">
@@ -16,7 +30,7 @@
                 <div class="col-11">
                     <div class="article-metadata">
                         <a href="">{{post.user}}</a>
-                        <small class=" text-muted">{{ post.created }}</small>
+                        <small class="text-muted">{{ post.created }}</small>
                      </div>
 
                     <a class="article-title " href="{% url 'post_detail' pk=post.pk %}"><h1>{{ post.title }}</h1></a>

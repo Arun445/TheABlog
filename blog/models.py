@@ -8,7 +8,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     text = models.TextField()
     created = models.DateTimeField(default=timezone.now)
-    published = models.BooleanField(blank=True, null=True)
+    published = models.DateTimeField(blank=True, null=True)
     likes = models.ManyToManyField(User,blank=True, related_name='post_likes')
 
     def __str__(self):

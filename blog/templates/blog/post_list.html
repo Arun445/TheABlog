@@ -7,6 +7,7 @@
 
 
 {% for post in posts %}
+
 <div class="content-section row">
             <div class="col-1">
             <img src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png"
@@ -15,28 +16,47 @@
     <div class="col-11">
         <div class="article-metadata">
             <a  href="">{{post.user}}</a>
-            <small class=" text-muted">{{ post.created }}</small>
+            <small class=" text-muted">{{ post.published }}</small>
         </div>
 
         <a class="article-title " href="{% url 'post_detail' pk=post.pk %}"><h1>{{ post.title }}</h1></a>
-            <p class="article-content">{{ post.text }}</p>
+            <p class="article-content">{{ post.text|truncatechars:400 }}</p>
     </div>
-    <div class="comment-section">
-        <div class="like-count{{ post.id }}">{{ post.number_of_likes }} likes</div>
-        {% if user.is_authenticated %}
-        <form action="{% url 'post_likes' %}" method="POST" class="like-form" id="{{ post.id }}">
-            {% csrf_token %}
-            <input type="hidden" name="post_id" value="{{ post.id }}">
-            <button type="submit" name="post_id" value="{{ post.id }}" class='btn btn-outline-primary like-btn{{post.id}}'>
-                {% if profile not in post.likes.all %}
-                    <text class="thumbs-down" >Like</text><i class="thumbs-down fas fa-thumbs-up"></i>
-                {% else %}
-                    Unlike<i class="thumbs-up fas fa-thumbs-up"></i>
-                {% endif %}
-
-            </button>
-        </form>
+    <div class="col-6 comment-sections">
+        {% if post.number_of_likes == 1 %}
+            <div class="margins-l like-count{{ post.id }}">{{ post.number_of_likes }} like</div>
+        {% else %}
+            <div class="margins-l like-count{{ post.id }}">{{ post.number_of_likes }} likes</div>
         {% endif %}
+    </div>
+    <div class="col-6 comment-sections">
+        <a class="margins-c" href="{% url 'post_detail' pk=post.pk %}#comments_post " >comments (0)</a>
+    </div>
+    <div class="col-12 comment-sections">
+            <button class="cmt_btn margins-c btn btn-outline-secondary">comment</button>
+                <div class="comment-box">
+                    {% for c in obj.comment_set.all %}
+                        <div class="ui segment mb-5">
+                            <img class="ui avatar image" src={{c.user.avatar.url}}>
+                            <span>{{ c.user }}</span>
+                            <div class='mt-5'>{{ c.body }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            {% if user.is_authenticated %}
+                    <form action="{% url 'post_likes' %}" method="POST" class="like-form" id="{{ post.id }}">
+                        {% csrf_token %}
+                        <input type="hidden" name="post_id" value="{{ post.id }}">
+                        <button type="submit" name="post_id" value="{{ post.id }}" class='margins-l btn btn-outline-primary like-btn{{post.id}}'>
+                        {% if profile not in post.likes.all %}
+                            <text class="thumbs-down" >Like</text><i class="thumbs-down fas fa-thumbs-up"></i>
+                        {% else %}
+                            <text>Unlike</text><i class="thumbs-up fas fa-thumbs-up"></i>
+                        {% endif %}
+                        </button>
+                    </form>
+                {% endif %}
     </div>
 </div>
 
@@ -52,6 +72,16 @@
 <script>
     $( document ).ready(function() {
          let display = false
+         $(".cmt_btn").click(function () {
+                if (display===false) {
+                    $(this).next(".comment-box").show("slow");
+                    display=true
+                } else {
+                    $(this).next(".comment-box").hide("slow");
+                    display=false
+                }
+            });
+
             $('.like-form').submit(function(e){
                 e.preventDefault()
 
@@ -86,8 +116,12 @@
 
                             res = trimCount + 1
                         }
+                        if(res == 1) {
+                            $(`.like-count${post_id}`).text(res + " " + "like")
+                        } else {
+                            $(`.like-count${post_id}`).text(res + " " + "likes")
+                        }
 
-                        $(`.like-count${post_id}`).text(res)
                     },
                     error: function(response) {
                         console.log('error', response)

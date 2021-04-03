@@ -91,6 +91,13 @@ a {
     border-radius: 40px;
 }
 
+.user-image-bg {
+    margin: auto;
+    height: 200px;
+    width: 200px;
+    border-radius: 40px;
+}
+
 .user-nav-image {
     height: 40px;
     width: 40px;
@@ -182,7 +189,7 @@ button a:hover {
 
 
 .dropdown-detail {
-    float: right;
+    float:right;
 }
 
 .red {
@@ -196,6 +203,35 @@ button a:hover {
 
 }
 
-.h1-center {
+.h1-center, .h5-center {
     text-align:center;
+}
+
+
+
+
+.margins-c {
+    float:right;
+    margin-right: 20px;
+    padding-bottom: 8px;
+
+}
+
+.margins-l {
+    margin-left: 20px;
+}
+
+.comment-sections {
+    border-top: 1px solid #e3e3e3;
+    padding: 10px 20px 0px 0px;
+}
+
+
+
+.card {
+    margin:auto;
+}
+
+.margins-top {
+    margin-top: 5px;
 }

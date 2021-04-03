@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
+from django.urls import resolve
 from django.http import JsonResponse
 
 from .models import Post, Like, Comment
@@ -23,9 +23,9 @@ def post_list(request):
 
 
 def users_posts(request, users_id):
-    user = get_object_or_404(User, pk=users_id)
-    posts = Post.objects.filter(user=user).order_by('-published')
-    context = {'posts': posts, 'user': user}
+    users = User.objects.get(pk=users_id)
+    posts = Post.objects.filter(user=users, published__isnull=False).order_by('-published')
+    context = {'posts': posts, 'users':users,}
 
     return render(request, 'blog/users_posts.html',context )
 
@@ -94,7 +94,9 @@ def post_publish(request, pk):
     #return redirect('post_list')
 
 def like_unlike_post(request):
+    current_site_adress = request.META['HTTP_REFERER']
     user = request.user
+    profile = User.objects.get(id=user.id)
     if request.method == 'POST':
         post_id = request.POST.get('post_id')
         post = Post.objects.get(id=post_id)
@@ -117,8 +119,12 @@ def like_unlike_post(request):
             post.save()
             like.save()
 
+    if current_site_adress == 'http://127.0.0.1:8000/':
 
-    return redirect('post_list')
+        return redirect('post_list')
+    else:
+
+        return redirect('post_detail', pk=post_id)
 
 
 def comment_new(request, pk):
@@ -166,3 +172,4 @@ def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
     return redirect('post_detail', pk=comment.post.pk)
+
