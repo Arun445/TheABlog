@@ -22,7 +22,7 @@ class Post(models.Model):
         return self.likes.all().count()
 
     def num_comments(self):
-        return self.comment_set.all().count
+        return self.comment_set.all().count()
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -35,6 +35,8 @@ class Comment(models.Model):
     def approve(self):
         self.approved = True
         self.save()
+
+
 
     def __str__(self):
         return self.text

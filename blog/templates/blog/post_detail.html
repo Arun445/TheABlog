@@ -59,7 +59,11 @@
 <hr>
     <h3 class="comments-h3" id="comments_post">Comments</h3>
     <hr>
+    {% if user.is_authenticated %}
     <a href="{% url 'comment_new' pk=post.pk %}"><button  class="btn btn-secondary">add comment</button></a>
+    {% else %}
+    <p>If you wanna leave a comment <a href="{% url 'login' %}">login</a></p>
+    {% endif %}
     <br>
     <br>
 

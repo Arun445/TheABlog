@@ -31,9 +31,10 @@
         {% endif %}
     </div>
     <div class="col-6 comment-sections">
-        <a class="margins-c" href="{% url 'post_detail' pk=post.pk %}#comments_post " >comments (0)</a>
+        <a class="margins-c" href="{% url 'post_detail' pk=post.pk %}#comments_post " >comments ({{ post.num_comments }})</a>
     </div>
     <div class="col-12 comment-sections">
+        {% if user.is_authenticated %}
             <button class="cmt_btn margins-c btn btn-outline-secondary">comment</button>
                 <div class="comment-box">
                     {% for c in obj.comment_set.all %}
@@ -45,7 +46,7 @@
                     {% endfor %}
                 </div>
 
-            {% if user.is_authenticated %}
+
                     <form action="{% url 'post_likes' %}" method="POST" class="like-form" id="{{ post.id }}">
                         {% csrf_token %}
                         <input type="hidden" name="post_id" value="{{ post.id }}">
