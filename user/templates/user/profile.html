@@ -6,10 +6,10 @@
 
 <div class="listing container mt-3">
     <div class="d-flex border p-8">
-        <img class="flex-shrink-0 mr-3 mt-3 rounded-circle profile-image" src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png">
+        <img class="flex-shrink-0 mr-3 mt-3 rounded-circle profile-image" src="{{ user.userprofile.user_image.url }}">
         <div>
-            <h4> {{ user.username }} </h4>
-            <p class="text-secondary">{{ user.email }}</p>
+            <h4> {{ users.username }} </h4>
+            <p class="text-secondary">{{ users.email }}</p>
         </div>
     </div>
 
@@ -19,9 +19,13 @@
             {% csrf_token %}
                 <fieldset class="form-group">
                     <legend class="border-bottom mb-4">Profile info</legend>
-                    <!-- {{ u_form|crispy }}
-                    {{ p_form|crispy }}-->
+
+                    · <a href="{% url 'password_change' %}">Change password</a>
+                    <hr>
+                    {{ e_form|crispy }}
+                    {{ p_form|crispy }}
                 </fieldset>
+            <br>
             <input type="submit" class="btn btn-primary" value="Update">
         </form>
     </div>

@@ -25,7 +25,8 @@ def post_list(request):
 def users_posts(request, users_id):
     users = User.objects.get(pk=users_id)
     posts = Post.objects.filter(user=users, published__isnull=False).order_by('-published')
-    context = {'posts': posts, 'users':users,}
+    user_post_count = posts.count()
+    context = {'posts': posts, 'users': users, 'user_post_count': user_post_count}
 
     return render(request, 'blog/users_posts.html',context )
 
@@ -85,6 +86,7 @@ def post_delete(request, pk):
 
 def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
+
     post.publish()
     return redirect('post_detail', pk=pk)
 

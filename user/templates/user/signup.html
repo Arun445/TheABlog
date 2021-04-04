@@ -10,12 +10,11 @@
   <div class="row">
     <div class="sign-up-form col-sm">
 <form action="" method="post">
-                {% csrf_token %}
-                    <h1>Sign up</h1>
+    {% csrf_token %}
+        <h1>Sign up</h1>
+        {{form|crispy}}
 
-                    {{form|crispy}}
-
-                    <br>
+    <br>
 
     <button type="submit" class="log_in_btn btn btn-primary">Submit</button>
 

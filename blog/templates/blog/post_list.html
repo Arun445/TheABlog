@@ -10,12 +10,13 @@
 
 <div class="content-section row">
             <div class="col-1">
-            <img src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png"
-         class="user-image">
+            <a href="{% url 'users_posts' users_id=post.user.id %}">
+                <img src="{{ post.user.userprofile.user_image.url }}" class="user-image">
+            </a>
                 </div>
     <div class="col-11">
         <div class="article-metadata">
-            <a  href="">{{post.user}}</a>
+            <a  href="{% url 'users_posts' users_id=post.user.id %}">{{post.user}}</a>
             <small class=" text-muted">{{ post.published }}</small>
         </div>
 

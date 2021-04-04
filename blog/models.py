@@ -15,7 +15,7 @@ class Post(models.Model):
         return self.title
 
     def publish(self):
-        self.published = True
+        self.published = timezone.now()
         self.save()
 
     def number_of_likes(self):

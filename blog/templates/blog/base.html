@@ -28,7 +28,9 @@
       </form>-->
       {% if user.is_authenticated %}
       <div class="dropdown">
-          <button class="like" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><img class="user-nav-image" src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png"></button>
+          <button class="like" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <img class="user-nav-image" src="{{ user.userprofile.user_image.url }}">
+          </button>
 
 
   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">

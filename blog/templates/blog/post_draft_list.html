@@ -29,6 +29,10 @@
 
 {% endfor %}
 
+    {% if not posts %}
+        You dont have draft posts <a href="{% url 'post_new' %}">create here</a>
+    {% endif %}
+
 </div>
 
 {% endblock %}
