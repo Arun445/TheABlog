@@ -36,7 +36,7 @@
   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
     <li><a class="dropdown-item" href="{% url 'post_new' %}">Create a new blog</a></li>
     <li><a class="dropdown-item" href="{% url 'profile' pk=user.pk %}">My profile</a></li>
-    <li><a class="dropdown-item" href="{% url 'post_draft_list' users_id=user.id %}">My draft list</a></li>
+    <li><a class="dropdown-item" href="{% url 'post_draft_list' pk=user.id %}">My draft list</a></li>
     <li><a class="dropdown-item" href="{% url 'users_posts' users_id=user.id %}">My blogs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="{% url 'logout' %}">Logout({{user}})</a></li>

@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
 from .models import Post, Like, Comment
-from.forms import PostForm, CommentForm
-
+from .forms import PostForm, CommentForm
+from .decorators import unauthenticated_user, user_authentication, post_authentication, comment_authentication
 
 
 # Create your views here.
@@ -33,6 +33,10 @@ def post_list(request):
             instance = p_form.save(commit=False)
             instance.author = profile
             instance.post = Post.objects.get(pk=request.POST.get('post_id'))
+            if len(instance.text) > 100:
+                instance.approved = False
+            else:
+                instance.approved = True
             instance.save()
             return redirect('post_list')
 
@@ -54,8 +58,9 @@ def users_posts(request, users_id):
     return render(request, 'blog/users_posts.html',context )
 
 @login_required
-def post_draft_list(request, users_id):
-    user = get_object_or_404(User, pk=users_id)
+@user_authentication
+def post_draft_list(request, pk):
+    user = get_object_or_404(User, pk=pk)
     posts = Post.objects.filter(user=user, published__isnull=True).order_by('-created')
     return render(request, 'blog/post_draft_list.html', {'posts': posts})
 
@@ -88,6 +93,7 @@ def post_new(request):
     return render(request, 'blog/post_new.html', {'form': form})
 
 @login_required
+@post_authentication
 def post_update(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
@@ -101,12 +107,15 @@ def post_update(request, pk):
     return render(request, 'blog/post_new.html', {'form': form})
 
 @login_required
+@post_authentication
 def post_delete(request, pk):
 
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     return redirect('post_list')
 
+@login_required
+@post_authentication
 def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
@@ -117,6 +126,8 @@ def post_publish(request, pk):
   #  post = get_object_or_404(Post, pk=pk)
    # post.likes.add(request.user)
     #return redirect('post_list')
+
+@login_required
 
 def like_unlike_post(request):
     current_site_adress = request.META['HTTP_REFERER']
@@ -151,7 +162,7 @@ def like_unlike_post(request):
 
         return redirect('post_detail', pk=post_id)
 
-
+@login_required
 def comment_new(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
@@ -174,12 +185,16 @@ def comment_new(request, pk):
     }
     return render(request, 'blog/comment_new.html', context)
 
+@login_required
+@comment_authentication
 def comment_delete(request, pk):
 
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('post_detail', pk=comment.post.id)
 
+@login_required
+@comment_authentication
 def comment_update(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     if request.method == 'POST':
@@ -193,8 +208,16 @@ def comment_update(request, pk):
         form = CommentForm(instance=comment)
     return render(request, 'blog/comment_new.html', {'comment': comment, 'form':form})
 
+
 def comment_approve(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    comment.approve()
+    comment = Comment.objects.get(pk=pk)
+    post_id = comment.post.id
+    post = Post.objects.get(pk=post_id)
+    post_user = post.user
+    if post_user == request.user:
+        comment = get_object_or_404(Comment, pk=pk)
+        comment.approve()
+    else:
+        return HttpResponse('sorry')
     return redirect('post_detail', pk=comment.post.pk)
 

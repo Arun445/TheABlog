@@ -22,7 +22,7 @@ class Post(models.Model):
         return self.likes.all().count()
 
     def num_comments(self):
-        return self.comment_set.all().count()
+        return self.comment_set.filter(approved=True).count()
 
     def post_length(self):
         length = len(self.text)

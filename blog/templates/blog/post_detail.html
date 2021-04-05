@@ -33,7 +33,7 @@
             <p class=" article-content">{{ post.text }}</p>
     </div>
     <hr>
-    <div class="col-12">
+    <div class="col-12 detail-like">
         <div class="margins-c">
         {% if post.number_of_likes == 1 %}
             <div class="margins-l margins-top like-count{{ post.id }}">{{ post.number_of_likes }} like for this post</div>
@@ -56,7 +56,7 @@
                 {% endif %}
     </div>
 
-<hr>
+    <hr>
     <h3 class="comments-h3" id="comments_post">Comments</h3>
     <hr>
     {% if user.is_authenticated %}
@@ -74,12 +74,14 @@
             <div class="comments content-section row">
                 <div class="col-sm">
                     <div class="article-metadata">
-                        <img src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png" class="user-image-sm">
-                        <a  href="">{{comment.author.username }}</a>
+                        <a href="{% url 'users_posts' users_id=comment.author.id %}">
+                            <img src="{{ comment.author.userprofile.user_image.url }}" class="user-image-sm">
+                            {{comment.author.username }}
+                        </a>
                         {% if comment.updated is None %}
-                            <small class=" text-muted">{{ comment.created }}</small>
+                            <small class="text-muted">{{ comment.created }}</small>
                         {% else %}
-                            <small class=" text-muted">{{ comment.updated }} (edited)</small>
+                            <small class="text-muted">{{ comment.updated }} (edited)</small>
                         {% endif %}
                         {% if comment.author == request.user or post.user == request.user %}
                             <a href="{% url 'comment_delete' pk=comment.id %}">del</a>
@@ -88,29 +90,29 @@
                             <a href="{% url 'comment_update' pk=comment.id %}">upd</a>
                         {% endif %}
                     </div>
-                        <p class="article-content">{{ comment.text }}</p>
+                    <p class="">{{ comment.text }}</p>
                 </div>
-        </div>
+            </div>
 
         {% endif %}
 
-            {% if not comment.approved and user.is_superuser or not comment.approved and post.user == request.user %}
-                <div class="comments content-section row">
-                    <div class="col-sm">
-                        <div class="article-metadata">
-                            <img src="{{ post.user.userprofile.user_image.url }}" class="user-image-sm">
-                            <a  href="">{{comment.author.username }}</a>
-                            <small class=" text-muted">{{ comment.created }}</small>
-                            <a href="{% url 'comment_delete' pk=comment.id %}">del</a>
-                            <a href="{% url 'comment_approve' pk=comment.id %}">approve</a>
-                        </div>
-                            <p class="article-content">{{ comment.text }}</p>
+        {% if not comment.approved and user.is_superuser or not comment.approved and post.user == request.user %}
+            <div class="comments content-section row">
+                <div class="col-sm">
+                    <div class="article-metadata">
+                        <img src="{{ post.user.userprofile.user_image.url }}" class="user-image-sm">
+                        <a  href="">{{comment.author.username }}</a>
+                        <small class=" text-muted">{{ comment.created }}</small>
+                        <a href="{% url 'comment_delete' pk=comment.id %}">del</a>
+                        <a href="{% url 'comment_approve' pk=comment.id %}">approve</a>
                     </div>
-        </div>
+                    <p class="">{{ comment.text }}</p>
+                </div>
+            </div>
         {% endif %}
     {% endfor %}
     {% if not comments %}
-    <p>No comments yet..</p>
+        <p>No comments yet..</p>
     {% endif %}
 </div>
 

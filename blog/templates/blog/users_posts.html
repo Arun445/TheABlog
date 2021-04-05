@@ -6,13 +6,18 @@
 <div class="listing container mt-3">
     <div class="card" style="width: 18rem;">
   <div class="card-body">
-    <h5 class="card-title h5-center">{{users}}</h5>
+      {% if users.userprofile.name and users.userprofile.last_name %}
+        <h5 class="card-title h5-center">{{users.userprofile.name}} {{ users.userprofile.last_name }}</h5>
+      {% else %}
+        <h5 class="card-title h5-center">{{users}}</h5>
+      {% endif %}
+
       {% if users.userprofile.about %}
     <p class="card-text h5-center">{{ users.userprofile.about }}</p>
       {% endif %}
 
   </div>
-         <img src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png" class="user-image-bg" alt="...">
+         <img src="{{users.userprofile.user_image.url}}" class="user-image-bg" alt="...">
 </div>
 </div>
 
@@ -20,9 +25,16 @@
 <br>
 
 <div class="listing container">
+    {% if users.userprofile.name %}
+    <h1 class="h1-center">Posts by {{users.userprofile.name}} ({{ user_post_count }})</h1>
+    {% else %}
     <h1 class="h1-center">Posts by {{users}} ({{ user_post_count }})</h1>
+    {% endif %}
     <hr>
     <br>
+
+    <!-- ALL POSTS -->
+
     {% for post in page_obj %}
         <div class="content-section row">
             <div class="col-12 comment-sectionas">
@@ -47,6 +59,9 @@
     </div>
         </div>
     {% endfor %}
+
+    <!-- PAGINATION ------------->
+
         {% if page_obj.has_other_pages %}
     <div class="col-12 pagination">
         <ul class="pagination">

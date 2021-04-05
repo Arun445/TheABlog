@@ -24,14 +24,16 @@ class EmailChangeForm(forms.ModelForm):
 
 
 class ProfileChangeForm(forms.ModelForm):
+    #about = forms.CharField(blank=True ,label="About me", widget=forms.Textarea(attrs={'rows': 3}))
 
     class Meta:
 
         model = UserProfile
-        fields = ['user_image', 'about']
+        fields = ['name', 'last_name' , 'user_image', 'about',]
         labels = {
+
             'user_image': 'My profile picture',
-            'about': 'About me'
+            'about':'About me'
                   }
 
 #Method to change field to be not required
