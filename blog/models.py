@@ -24,6 +24,10 @@ class Post(models.Model):
     def num_comments(self):
         return self.comment_set.all().count()
 
+    def post_length(self):
+        length = len(self.text)
+        return length
+
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)

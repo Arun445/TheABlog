@@ -63,11 +63,14 @@ a {
 }
 
 .article-title {
+    text-align: center;
+    margin-right: 50px;
   color: #444444;
 }
 
 .article-content {
   white-space: pre-line;
+  text-align:center;
 }
 
 .d-flex {
@@ -218,7 +221,7 @@ button a:hover {
 }
 
 .margins-l {
-    margin-left: 20px;
+    margin-left: 5px;
 }
 
 .comment-sections {
@@ -234,4 +237,26 @@ button a:hover {
 
 .margins-top {
     margin-top: 5px;
+}
+
+.comment-box {
+    display: none;
+    margin-top: 10px;
+}
+
+.narrow-select {
+    margin-left: 10px;
+    width: 85%;
+}
+
+.margins-cs {
+    float:right;
+
+
+}
+
+.comment-sectionas {
+ padding-bottom: 1px;
+  margin-bottom: 4px;
+
 }

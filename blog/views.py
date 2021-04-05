@@ -14,10 +14,20 @@ from.forms import PostForm, CommentForm
 
 def post_list(request):
     posts = Post.objects.filter(published__isnull=False).order_by('-published')
-    context = {'posts': posts,}
+    p_form = CommentForm(request.POST or None)
+
+    context = {'posts': posts,'p_form': p_form}
     if request.user.is_authenticated:
         profile = User.objects.get(id=request.user.id)
         context['profile'] = profile
+
+
+        if p_form.is_valid():
+            instance = p_form.save(commit=False)
+            instance.author = profile
+            instance.post = Post.objects.get(pk=request.POST.get('post_id'))
+            instance.save()
+            return redirect('post_list')
 
     return render(request, 'blog/post_list.html',context )
 
