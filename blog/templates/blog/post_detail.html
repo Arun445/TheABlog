@@ -119,18 +119,6 @@
 
 {% block scripts %}
 <script>
-    $( document ).ready(function() {
-         let display = false
-         $(".cmt_btn").click(function () {
-                if (display===false) {
-                    $(this).next(".comment-box").show("slow");
-                    display=true
-                } else {
-                    $(this).next(".comment-box").hide("slow");
-                    display=false
-                }
-            });
-
             $('.like-form').submit(function(e){
                 e.preventDefault()
 
@@ -171,16 +159,13 @@
                             $(`.like-count${post_id}`).text(res + " " + "likes for this post")
                         }
 
-
-
-
                     },
                     error: function(response) {
                         console.log('error', response)
                     }
                 })
     })
- });
+
 </script>
 {% endblock scripts %}
 

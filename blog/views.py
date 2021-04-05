@@ -2,8 +2,7 @@ from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.urls import resolve
-from django.http import JsonResponse
+from django.core.paginator import Paginator
 
 from .models import Post, Like, Comment
 from.forms import PostForm, CommentForm
@@ -14,9 +13,17 @@ from.forms import PostForm, CommentForm
 
 def post_list(request):
     posts = Post.objects.filter(published__isnull=False).order_by('-published')
+    #Pagination functions
+    paginator = Paginator(posts, 4)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    #Add comment to post form
     p_form = CommentForm(request.POST or None)
 
-    context = {'posts': posts,'p_form': p_form}
+    context = {'posts': posts,'p_form': p_form, 'page_obj':page_obj}
+
     if request.user.is_authenticated:
         profile = User.objects.get(id=request.user.id)
         context['profile'] = profile
@@ -34,9 +41,15 @@ def post_list(request):
 
 def users_posts(request, users_id):
     users = User.objects.get(pk=users_id)
-    posts = Post.objects.filter(user=users, published__isnull=False).order_by('-published')
+    posts = Post.objects.filter(user=users, published__isnull=False).order_by('-likes')
     user_post_count = posts.count()
-    context = {'posts': posts, 'users': users, 'user_post_count': user_post_count}
+    #pagination
+    paginator = Paginator(posts, 3)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {'posts': posts, 'users': users, 'user_post_count': user_post_count, 'page_obj':page_obj}
 
     return render(request, 'blog/users_posts.html',context )
 

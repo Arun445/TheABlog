@@ -16,6 +16,7 @@ body {
     background: #fafafa;
     color: #333333;
     text-decoration: none;
+    padding-bottom: 30px;
 }
 
 a {
@@ -215,13 +216,13 @@ button a:hover {
 
 .margins-c {
     float:right;
-    margin-right: 20px;
+    margin-right: 10px;
     padding-bottom: 8px;
 
 }
 
 .margins-l {
-    margin-left: 5px;
+    margin-left: 20px;
 }
 
 .comment-sections {
@@ -259,4 +260,9 @@ button a:hover {
  padding-bottom: 1px;
   margin-bottom: 4px;
 
+}
+
+.pagination {
+    padding-top: 20px;
+    margin:auto;
 }
