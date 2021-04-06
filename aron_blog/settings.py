@@ -130,9 +130,9 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 STATIC_ROOT = Path(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [
-    Path(BASE_DIR, 'static')
-]
+#STATICFILES_DIRS = [
+#    Path(BASE_DIR, 'static')
+#]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
