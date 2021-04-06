@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY_BLOG')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = (os.environ.get('DEBUG_VALUE') == True )
 
-ALLOWED_HOSTS = ['aron-blog-app.herokuapp.com']
+ALLOWED_HOSTS = ['aron-blog-app.herokuapp.com', '127.0.0.1:8000']
 
 
 # Application definition
@@ -88,7 +88,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+import dj_database_url
 
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 
 # Password validation
