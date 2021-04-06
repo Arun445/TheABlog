@@ -1,1 +1,1 @@
-web: gunicorn aron_blog.wsgi --log-file -
+web: gunicorn aron_blog.wsgi
