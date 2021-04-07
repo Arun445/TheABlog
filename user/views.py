@@ -11,6 +11,7 @@ from .forms import UserRegisterForm, EmailChangeForm, ProfileChangeForm
 from blog.decorators import unauthenticated_user, user_authentication
 # Create your views here.
 
+#Register function using UserRegistartionForm
 @unauthenticated_user
 def signup(request):
 
@@ -25,6 +26,8 @@ def signup(request):
         form = UserRegisterForm()
     return render(request, 'user/signup.html', {'form':form})
 
+#Test
+'''
 def login_page(request):
     if request.user.is_authenticated:
         return redirect('post_list')
@@ -32,7 +35,9 @@ def login_page(request):
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
+'''
 
+#Users personal profile, where you can configure specific settings.
 @login_required
 @user_authentication
 def profile(request, pk):

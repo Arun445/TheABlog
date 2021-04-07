@@ -5,15 +5,13 @@
 {% load crispy_forms_tags %}
 
 <div class="listing container">
-
-
     <h1>Create a new post</h1>
     <form action="" method="post">
         {% csrf_token %}
         {{ form|crispy }}
+        <br>
         <button class="btn btn-primary">Create</button>
     </form>
-
 </div>
 
 {% endblock %}

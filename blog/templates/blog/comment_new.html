@@ -5,16 +5,12 @@
 {% load crispy_forms_tags %}
 
 <div class="listing container">
-
-
     <h1>Create a comment</h1>
     <form action="" method="POST">
         {% csrf_token %}
         <button type="submit" class=" margins-cs btn btn-primary">Send</button>
         {{ form|crispy }}
-
     </form>
-
 </div>
 
 {% endblock %}

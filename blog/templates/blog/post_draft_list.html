@@ -8,31 +8,24 @@
 <div class="listing container">
 
 
-{% for post in posts %}
-<div class="content-section row">
+    {% for post in posts %}
+        <div class="content-section row">
             <div class="col-1">
-            <img src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png"
-         class="user-image">
+                <img src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png" class="user-image">
+            </div>
+            <div class="col-11">
+                <div class="article-metadata">
+                    <a  href="">{{post.user}}</a>
+                    <small class=" text-muted">{{ post.created }}</small>
                 </div>
-    <div class="col-11">
-        <div class="article-metadata">
-            <a  href="">{{post.user}}</a>
-            <small class=" text-muted">{{ post.created }}</small>
+                <a class="article-title " href="{% url 'post_detail' pk=post.pk %}"><h1>{{ post.title }}</h1></a>
+                <p class="article-content">{{ post.text }}</p>
+            </div>
         </div>
-
-        <a class="article-title " href="{% url 'post_detail' pk=post.pk %}"><h1>{{ post.title }}</h1></a>
-            <p class="article-content">{{ post.text }}</p>
-    </div>
-
-    </div>
-
-
-{% endfor %}
-
+    {% endfor %}
     {% if not posts %}
-        You dont have draft posts <a href="{% url 'post_new' %}">create here</a>
+        You don't have draft posts <a href="{% url 'post_new' %}">create here</a>
     {% endif %}
-
 </div>
 
 {% endblock %}

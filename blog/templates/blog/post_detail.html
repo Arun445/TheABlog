@@ -30,39 +30,44 @@
         </div>
 
         <h1 class="h1-center" >{{ post.title }}</h1>
-            <p class=" article-content">{{ post.text }}</p>
+        <p class=" article-content">{{ post.text }}</p>
+
     </div>
+    {% if post.published %}
     <hr>
+
     <div class="col-12 detail-like">
         <div class="margins-c">
-        {% if post.number_of_likes == 1 %}
-            <div class="margins-l margins-top like-count{{ post.id }}">{{ post.number_of_likes }} like for this post</div>
-        {% else %}
-            <div class="margins-l margins-top like-count{{ post.id }}">{{ post.number_of_likes }} likes for this post</div>
-        {% endif %}
+            {% if post.number_of_likes == 1 %}
+                <div class="margins-l margins-top like-count{{ post.id }}">{{ post.number_of_likes }} like for this post</div>
+            {% else %}
+                <div class="margins-l margins-top like-count{{ post.id }}">{{ post.number_of_likes }} likes for this post</div>
+            {% endif %}
         </div>
         {% if user.is_authenticated %}
-                    <form action="{% url 'post_likes' %}" method="POST" class="like-form" id="{{ post.id }}">
-                        {% csrf_token %}
-                        <input type="hidden" name="post_id" value="{{ post.id }}">
-                        <button type="submit" name="post_id" value="{{ post.id }}" class='margins-l btn btn-outline-primary like-btn{{post.id}}'>
-                        {% if user not in post.likes.all %}
-                            <text class="thumbs-down" >Like</text><i class="thumbs-down fas fa-thumbs-up"></i>
-                        {% else %}
-                            <text>Unlike</text><i class="thumbs-up fas fa-thumbs-up"></i>
-                        {% endif %}
-                        </button>
-                    </form>
+            <form action="{% url 'post_likes' %}" method="POST" class="like-form" id="{{ post.id }}">
+                {% csrf_token %}
+                <input type="hidden" name="post_id" value="{{ post.id }}">
+                <button type="submit" name="post_id" value="{{ post.id }}" class='margins-l btn btn-outline-primary like-btn{{post.id}}'>
+                {% if user not in post.likes.all %}
+                    <text class="thumbs-down" >Like</text><i class="thumbs-down fas fa-thumbs-up"></i>
+                {% else %}
+                    <text>Unlike</text><i class="thumbs-up fas fa-thumbs-up"></i>
                 {% endif %}
-    </div>
+                </button>
+            </form>
+        {% endif %}
 
+    </div>
     <hr>
+    {% endif %}
+
     <h3 class="comments-h3" id="comments_post">Comments</h3>
     <hr>
     {% if user.is_authenticated %}
-    <a href="{% url 'comment_new' pk=post.pk %}"><button  class="btn btn-secondary">add comment</button></a>
+        <a href="{% url 'comment_new' pk=post.pk %}"><button  class="btn btn-secondary">add comment</button></a>
     {% else %}
-    <p>If you wanna leave a comment <a href="{% url 'login' %}">login</a></p>
+        <p>If you wanna leave a comment <a href="{% url 'comment_new' pk=post.pk %}">login</a></p>
     {% endif %}
     <br>
     <br>

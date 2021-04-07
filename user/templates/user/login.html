@@ -5,29 +5,20 @@
 {% load crispy_forms_tags %}
 
 <div class="listing container">
-
-
-
   <div class="row">
     <div class="log-in col-sm">
-            <form action="" method="post">
-                {% csrf_token %}
-                    <h1>Log in</h1>
-
-                    {{form|crispy}}
-
-                    <br>
-
-    <button type="submit" class="log_in_btn btn btn-primary">Submit</button>
-                <div class="up col-sm">
+        <form action="" method="post">
+            {% csrf_token %}
+            <h1>Log in</h1>
+            {{form|crispy}}
+            <br>
+            <button type="submit" class="log_in_btn btn btn-primary">Submit</button>
+            <div class="up col-sm">
                 <a href="{% url 'password_reset' %}">Forgot Password?</a> · <a href="{% url 'signup' %}">Sign up</a>
-</div>
-
-            </form>
+            </div>
+        </form>
     </div>
   </div>
-
-
 </div>
 
 

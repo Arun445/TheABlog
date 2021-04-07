@@ -5,20 +5,19 @@
 
 <div class="listing container mt-3">
     <div class="card" style="width: 18rem;">
-  <div class="card-body">
-      {% if users.userprofile.name and users.userprofile.last_name %}
-        <h5 class="card-title h5-center">{{users.userprofile.name}} {{ users.userprofile.last_name }}</h5>
-      {% else %}
-        <h5 class="card-title h5-center">{{users}}</h5>
-      {% endif %}
+        <div class="card-body">
+          {% if users.userprofile.name and users.userprofile.last_name %}
+            <h5 class="card-title h5-center">{{users.userprofile.name}} {{ users.userprofile.last_name }}</h5>
+          {% else %}
+            <h5 class="card-title h5-center">{{users}}</h5>
+          {% endif %}
 
-      {% if users.userprofile.about %}
-    <p class="card-text h5-center">{{ users.userprofile.about }}</p>
-      {% endif %}
-
-  </div>
+          {% if users.userprofile.about %}
+            <p class="card-text h5-center">{{ users.userprofile.about }}</p>
+          {% endif %}
+        </div>
          <img src="{{users.userprofile.user_image.url}}" class="user-image-bg" alt="...">
-</div>
+    </div>
 </div>
 
 <br>
@@ -26,9 +25,9 @@
 
 <div class="listing container">
     {% if users.userprofile.name %}
-    <h1 class="h1-center">Posts by {{users.userprofile.name}} ({{ user_post_count }})</h1>
+        <h1 class="h1-center">Posts by {{users.userprofile.name}} ({{ user_post_count }})</h1>
     {% else %}
-    <h1 class="h1-center">Posts by {{users}} ({{ user_post_count }})</h1>
+        <h1 class="h1-center">Posts by {{users}} ({{ user_post_count }})</h1>
     {% endif %}
     <hr>
     <br>
@@ -44,45 +43,46 @@
                 <a  href="{% url 'users_posts' users_id=post.user.id %}">{{post.user}}</a>
                 <small class=" text-muted">{{ post.published }}</small>
             </div>
-        <div class="col-12 comment-sections">
-            <a class="article-title " href="{% url 'post_detail' pk=post.pk %}"><h1>{{ post.title }}</h1></a>
-            <p class="article-content">{{ post.text|truncatechars:400 }}
-                {% if post.post_length > 400 %}<a href="{% url 'post_detail' pk=post.pk %}">(more)</a>{% endif %}
-            </p>
-        </div>
+
+            <div class="col-12 comment-sections">
+                <a class="article-title " href="{% url 'post_detail' pk=post.pk %}"><h1>{{ post.title }}</h1></a>
+                <p class="article-content">{{ post.text|truncatechars:400 }}
+                    {% if post.post_length > 400 %}<a href="{% url 'post_detail' pk=post.pk %}">(more)</a>{% endif %}
+                </p>
+            </div>
             <div class="comment-sections">
-        {% if post.number_of_likes == 1 %}
-            <div class="margins-l like-count{{ post.id }}">{{ post.number_of_likes }} like</div>
-        {% else %}
-            <div class="margins-l like-count{{ post.id }}">{{ post.number_of_likes }} likes</div>
-        {% endif %}
-    </div>
+                {% if post.number_of_likes == 1 %}
+                    <div class="margins-l like-count{{ post.id }}">{{ post.number_of_likes }} like</div>
+                {% else %}
+                    <div class="margins-l like-count{{ post.id }}">{{ post.number_of_likes }} likes</div>
+                {% endif %}
+             </div>
         </div>
     {% endfor %}
 
     <!-- PAGINATION ------------->
 
-        {% if page_obj.has_other_pages %}
-    <div class="col-12 pagination">
-        <ul class="pagination">
-            {% if page_obj.has_previous %}
-                <li><a href="?page=1" class="btn btn-outline-secondary">&laquo;</a></li>
-                <li><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-secondary">previous</a></li>
-            {% endif %}
-                {% for page in page_obj.paginator.page_range %}
-                    {% if page_obj.number == page %}
-                        <li class="btn btn-secondary">{{ page }}</li>
-                    {% elif page_obj.number < page|add:"3" and page_obj.number > page|add:"-3"  %}
-                        <li><a class="btn btn-outline-secondary" href="?page={{ page }}">{{ page }}</a></li>
-                    {% endif %}
-                {% endfor %}
-            {% if page_obj.has_next %}
-                <li><a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-secondary">next</a></li>
-                <li><a href="?page=4" class="btn btn-outline-secondary">&raquo;</a></li>
-            {% endif %}
-        </ul>
-    {% endif %}
-</div>
+    {% if page_obj.has_other_pages %}
+        <div class="col-12 pagination">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li><a href="?page=1" class="btn btn-outline-secondary">&laquo;</a></li>
+                    <li><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-secondary">previous</a></li>
+                {% endif %}
+                    {% for page in page_obj.paginator.page_range %}
+                        {% if page_obj.number == page %}
+                            <li class="btn btn-secondary">{{ page }}</li>
+                        {% elif page_obj.number < page|add:"3" and page_obj.number > page|add:"-3"  %}
+                            <li><a class="btn btn-outline-secondary" href="?page={{ page }}">{{ page }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-secondary">next</a></li>
+                    <li><a href="?page=4" class="btn btn-outline-secondary">&raquo;</a></li>
+                {% endif %}
+            </ul>
+    % endif %}
+        </div>
 </div>
 
 

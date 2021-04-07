@@ -6,85 +6,68 @@
 <div class="listing container">
 
 
-{% for post in page_obj %}
+    {% for post in page_obj %}
 
-<div class="content-section row">
+        <div class="content-section row">
             <div class="col-12 comment-sectionas">
-            <a href="{% url 'users_posts' users_id=post.user.id %}">
-                <img src="{{ post.user.userprofile.user_image.url }}" class="user-image">
-            </a>
+                <a href="{% url 'users_posts' users_id=post.user.id %}">
+                    <img src="{{ post.user.userprofile.user_image.url }}" class="user-image">
+                </a>
+                <a  href="{% url 'users_posts' users_id=post.user.id %}">{{post.user}}</a>
+                <small class=" text-muted">{{ post.published }}</small>
+            </div>
+            <div class="col-12 comment-sections">
+                <a class="article-title " href="{% url 'post_detail' pk=post.pk %}"><h1>{{ post.title }}</h1></a>
+                <p class="article-content">{{ post.text|truncatechars:400 }}
+                    {% if post.post_length > 400 %}<a href="{% url 'post_detail' pk=post.pk %}">(more)</a>{% endif %}</p>
+            </div>
 
-
-
-            <a  href="{% url 'users_posts' users_id=post.user.id %}">{{post.user}}</a>
-            <small class=" text-muted">{{ post.published }}</small>
-
-</div>
-<div class="col-12 comment-sections">
-        <a class="article-title " href="{% url 'post_detail' pk=post.pk %}"><h1>{{ post.title }}</h1></a>
-            <p class="article-content">{{ post.text|truncatechars:400 }}
-                {% if post.post_length > 400 %}<a href="{% url 'post_detail' pk=post.pk %}">(more)</a>{% endif %}
-            </p>
-    </div>
-
-    <div class="col-6 comment-sections">
-        <a class="margins-l" href="{% url 'post_detail' pk=post.pk %}#comments_post " >comments ({{ post.num_comments }})</a>
-    </div>
-    <div class="col-6 comment-sections">
-        {% if post.number_of_likes == 1 %}
-            <div class="margins-c like-count{{ post.id }}">{{ post.number_of_likes }} like</div>
-        {% else %}
-            <div class="margins-c like-count{{ post.id }}">{{ post.number_of_likes }} likes</div>
-        {% endif %}
-    </div>
-    <div class="col-12 comment-sections">
-        {% if user.is_authenticated %}
-
+            <div class="col-6 comment-sections">
+                <a class="margins-l" href="{% url 'post_detail' pk=post.pk %}#comments_post " >comments ({{ post.num_comments }})</a>
+            </div>
+            <div class="col-6 comment-sections">
+                {% if post.number_of_likes == 1 %}
+                    <div class="margins-c like-count{{ post.id }}">{{ post.number_of_likes }} like</div>
+                {% else %}
+                    <div class="margins-c like-count{{ post.id }}">{{ post.number_of_likes }} likes</div>
+                {% endif %}
+            </div>
+            <div class="col-12 comment-sections">
+                {% if user.is_authenticated %}
                     <form action="{% url 'post_likes' %}" method="POST" class="like-form" id="{{ post.id }}">
                         {% csrf_token %}
                         <input type="hidden" name="post_id" value="{{ post.id }}">
                         <button type="submit" name="post_id" value="{{ post.id }}" class='btn margins-c btn-outline-primary like-btn{{post.id}}'>
-
                             {% if profile not in post.likes.all %}
-                            <text class="thumbs-down" >Like</text><i class="thumbs-down fas fa-thumbs-up"></i>
-                        {% else %}
-                            <text>Unlike</text><i class="thumbs-up fas fa-thumbs-up"></i>
-                        {% endif %}
+                                <text class="thumbs-down" >Like</text><i class="thumbs-down fas fa-thumbs-up"></i>
+                            {% else %}
+                                <text>Unlike</text><i class="thumbs-up fas fa-thumbs-up"></i>
+                            {% endif %}
                         </button>
-
                     </form>
-        <button class="cmt_btn margins-l btn btn-outline-secondary">comment</button>
+                    <button class="cmt_btn margins-l btn btn-outline-secondary">comment</button>
                 {% endif %}
-
-
-        <div class="comment-box">
-            <div class="col-12 comment-sections">
-            <form action="" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="post_id" value="{{ post.id }}">
-                <button type="submit" class=" margins-cs btn btn-primary">Send</button>
-                {{ p_form|crispy }}
-
-            </form>
-        </div>
+                <div class="comment-box">
+                    <div class="col-12 comment-sections">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="post_id" value="{{ post.id }}">
+                            <button type="submit" class=" margins-cs btn btn-primary">Send</button>
+                            {{ p_form|crispy }}
+                        </form>
+                    </div>
+                </div>
             </div>
+        </div>
 
-    </div>
-
-
-
-</div>
-
-
-
-{% endfor %}
+    {% endfor %}
     {% if page_obj.has_other_pages %}
-    <div class="col-12 pagination">
-        <ul class="pagination">
-            {% if page_obj.has_previous %}
-                <li><a href="?page=1" class="btn btn-outline-secondary">&laquo;</a></li>
-                <li><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-secondary">previous</a></li>
-            {% endif %}
+        <div class="col-12 pagination">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li><a href="?page=1" class="btn btn-outline-secondary">&laquo;</a></li>
+                    <li><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-secondary">previous</a></li>
+                {% endif %}
                 {% for page in page_obj.paginator.page_range %}
                     {% if page_obj.number == page %}
                         <li class="btn btn-secondary">{{ page }}</li>
@@ -92,13 +75,13 @@
                         <li><a class="btn btn-outline-secondary" href="?page={{ page }}">{{ page }}</a></li>
                     {% endif %}
                 {% endfor %}
-            {% if page_obj.has_next %}
-                <li><a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-secondary">next</a></li>
-                <li><a href="?page=4" class="btn btn-outline-secondary">&raquo;</a></li>
-            {% endif %}
-        </ul>
+                {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-secondary">next</a></li>
+                    <li><a href="?page=4" class="btn btn-outline-secondary">&raquo;</a></li>
+                {% endif %}
+            </ul>
     {% endif %}
-</div>
+        </div>
 </div>
 {% endblock %}
 
