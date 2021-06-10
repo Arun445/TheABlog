@@ -1,178 +1,206 @@
-{% extends 'blog/base.html' %}
-
-
-{% block content %}
-{% load crispy_forms_tags %}
+{% extends 'blog/base.html' %} {% block content %} {% load crispy_forms_tags %}
 
 <div class="listing container">
-
-    <div class="col-sm">
-        <div class="article-metadata">
-            <a href="{% url 'users_posts' users_id=post.user.id %}">
-                <img src="{{ post.user.userprofile.user_image.url }}" class="user-image-sm">
-            </a>
-            <a href="{% url 'users_posts' users_id=post.user.id %}">{{post.user}}</a>
-            <small class=" text-muted">{{ post.created }} </small>
-            {% if post.published is not null and post.user == request.user %}
-                (published)
-            {% endif %}
-                {% if post.user == request.user %}
-                    <button class="like dropdown-detail" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="{% url 'post_update' pk=post.pk %}">Update post</a></li>
-                            {% if post.published is null %}
-                        <li><a class="dropdown-item" href="{% url 'post_publish' pk=post.pk %}">Publish post</a></li>
-                            {% endif %}
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="red dropdown-item" href="{% url 'post_delete' pk=post.pk %}" onclick="return confirm('Are you sure?')" >Delete post</a></li>
-                    </ul>
-                {% endif %}
-        </div>
-
-        <h1 class="h1-center" >{{ post.title }}</h1>
-        <p class=" article-content">{{ post.text }}</p>
-
-    </div>
-    {% if post.published %}
-    <hr>
-
-    <div class="col-12 detail-like">
-        <div class="margins-c">
-            {% if post.number_of_likes == 1 %}
-                <div class="margins-l margins-top like-count{{ post.id }}">{{ post.number_of_likes }} like for this post</div>
-            {% else %}
-                <div class="margins-l margins-top like-count{{ post.id }}">{{ post.number_of_likes }} likes for this post</div>
-            {% endif %}
-        </div>
-        {% if user.is_authenticated %}
-            <form action="{% url 'post_likes' %}" method="POST" class="like-form" id="{{ post.id }}">
-                {% csrf_token %}
-                <input type="hidden" name="post_id" value="{{ post.id }}">
-                <button type="submit" name="post_id" value="{{ post.id }}" class='margins-l btn btn-outline-primary like-btn{{post.id}}'>
-                {% if user not in post.likes.all %}
-                    <text class="thumbs-down" >Like</text><i class="thumbs-down fas fa-thumbs-up"></i>
-                {% else %}
-                    <text>Unlike</text><i class="thumbs-up fas fa-thumbs-up"></i>
-                {% endif %}
-                </button>
-            </form>
+  <div class="col-sm">
+    <div class="article-metadata">
+      <a href="{% url 'users_posts' users_id=post.user.id %}">
+        <img
+          src="{{ post.user.userprofile.user_image.url }}"
+          class="user-image-sm"
+        />
+      </a>
+      <a href="{% url 'users_posts' users_id=post.user.id %}">{{post.user}}</a>
+      <small class="text-muted">{{ post.created }} </small>
+      {% if post.published is not null and post.user == request.user %}
+      (published) {% endif %} {% if post.user == request.user %}
+      <button
+        class="like dropdown-detail"
+        type="button"
+        id="dropdownMenuButton1"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <i class="fas fa-ellipsis-h"></i>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li>
+          <a class="dropdown-item" href="{% url 'post_update' pk=post.pk %}"
+            >Update post</a
+          >
+        </li>
+        {% if post.published is null %}
+        <li>
+          <a class="dropdown-item" href="{% url 'post_publish' pk=post.pk %}"
+            >Publish post</a
+          >
+        </li>
         {% endif %}
-
+        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <a
+            class="red dropdown-item"
+            href="{% url 'post_delete' pk=post.pk %}"
+            onclick="return confirm('Are you sure?')"
+            >Delete post</a
+          >
+        </li>
+      </ul>
+      {% endif %}
     </div>
-    <hr>
-    {% endif %}
 
-    <h3 class="comments-h3" id="comments_post">Comments</h3>
-    <hr>
+    <h1 class="h1-center">{{ post.title }}</h1>
+    <p class="article-content">{{ post.text }}</p>
+  </div>
+  {% if post.published %}
+  <hr />
+
+  <div class="col-12 detail-like">
+    <div class="margins-c">
+      {% if post.number_of_likes == 1 %}
+      <div class="margins-l margins-top like-count{{ post.id }}">
+        {{ post.number_of_likes }} like for this post
+      </div>
+      {% else %}
+      <div class="margins-l margins-top like-count{{ post.id }}">
+        {{ post.number_of_likes }} likes for this post
+      </div>
+      {% endif %}
+    </div>
     {% if user.is_authenticated %}
-        <a href="{% url 'comment_new' pk=post.pk %}"><button  class="btn btn-secondary">add comment</button></a>
-    {% else %}
-        <p>If you wanna leave a comment <a href="{% url 'comment_new' pk=post.pk %}">login</a></p>
-    {% endif %}
-    <br>
-    <br>
-
-    {% for comment in comments %}
-
-        {% if comment.approved %}
-
-            <div class="comments content-section row">
-                <div class="col-sm">
-                    <div class="article-metadata">
-                        <a href="{% url 'users_posts' users_id=comment.author.id %}">
-                            <img src="{{ comment.author.userprofile.user_image.url }}" class="user-image-sm">
-                            {{comment.author.username }}
-                        </a>
-                        {% if comment.updated is None %}
-                            <small class="text-muted">{{ comment.created }}</small>
-                        {% else %}
-                            <small class="text-muted">{{ comment.updated }} (edited)</small>
-                        {% endif %}
-                        {% if comment.author == request.user or post.user == request.user %}
-                            <a href="{% url 'comment_delete' pk=comment.id %}">del</a>
-                        {% endif %}
-                        {% if comment.author == request.user %}
-                            <a href="{% url 'comment_update' pk=comment.id %}">upd</a>
-                        {% endif %}
-                    </div>
-                    <p class="">{{ comment.text }}</p>
-                </div>
-            </div>
-
+    <form
+      action="{% url 'post_likes' %}"
+      method="POST"
+      class="like-form"
+      id="{{ post.id }}"
+    >
+      {% csrf_token %}
+      <input type="hidden" name="post_id" value="{{ post.id }}" />
+      <button
+        type="submit"
+        name="post_id"
+        value="{{ post.id }}"
+        class="margins-l btn btn-outline-primary like-btn{{post.id}}"
+      >
+        {% if user not in post.likes.all %}
+        <text class="thumbs-down">Like</text
+        ><i class="thumbs-down fas fa-thumbs-up"></i>
+        {% else %}
+        <text>Unlike</text><i class="thumbs-up fas fa-thumbs-up"></i>
         {% endif %}
-
-        {% if not comment.approved and user.is_superuser or not comment.approved and post.user == request.user %}
-            <div class="comments content-section row">
-                <div class="col-sm">
-                    <div class="article-metadata">
-                        <img src="{{ post.user.userprofile.user_image.url }}" class="user-image-sm">
-                        <a  href="">{{comment.author.username }}</a>
-                        <small class=" text-muted">{{ comment.created }}</small>
-                        <a href="{% url 'comment_delete' pk=comment.id %}">del</a>
-                        <a href="{% url 'comment_approve' pk=comment.id %}">approve</a>
-                    </div>
-                    <p class="">{{ comment.text }}</p>
-                </div>
-            </div>
-        {% endif %}
-    {% endfor %}
-    {% if not comments %}
-        <p>No comments yet..</p>
+      </button>
+    </form>
     {% endif %}
+  </div>
+  <hr />
+  {% endif %}
+
+  <h3 class="comments-h3" id="comments_post">Comments</h3>
+  <hr />
+  {% if user.is_authenticated %}
+  <a href="{% url 'comment_new' pk=post.pk %}"
+    ><button class="btn btn-secondary">add comment</button></a
+  >
+  {% else %}
+  <p>If you wanna leave a comment <a href="{% url 'login'  %}">login</a></p>
+  {% endif %}
+  <br />
+  <br />
+
+  {% for comment in comments %} {% if comment.approved %}
+
+  <div class="comments content-section row">
+    <div class="col-sm">
+      <div class="article-metadata">
+        <a href="{% url 'users_posts' users_id=comment.author.id %}">
+          <img
+            src="{{ comment.author.userprofile.user_image.url }}"
+            class="user-image-sm"
+          />
+          {{comment.author.username }}
+        </a>
+        {% if comment.updated is None %}
+        <small class="text-muted">{{ comment.created }}</small>
+        {% else %}
+        <small class="text-muted">{{ comment.updated }} (edited)</small>
+        {% endif %} {% if comment.author == request.user or post.user ==
+        request.user %}
+        <a href="{% url 'comment_delete' pk=comment.id %}">del</a>
+        {% endif %} {% if comment.author == request.user %}
+        <a href="{% url 'comment_update' pk=comment.id %}">upd</a>
+        {% endif %}
+      </div>
+      <p class="">{{ comment.text }}</p>
+    </div>
+  </div>
+
+  {% endif %} {% if not comment.approved and user.is_superuser or not
+  comment.approved and post.user == request.user %}
+  <div class="comments content-section row">
+    <div class="col-sm">
+      <div class="article-metadata">
+        <img
+          src="{{ post.user.userprofile.user_image.url }}"
+          class="user-image-sm"
+        />
+        <a href="">{{comment.author.username }}</a>
+        <small class="text-muted">{{ comment.created }}</small>
+        <a href="{% url 'comment_delete' pk=comment.id %}">del</a>
+        <a href="{% url 'comment_approve' pk=comment.id %}">approve</a>
+      </div>
+      <p class="">{{ comment.text }}</p>
+    </div>
+  </div>
+  {% endif %} {% endfor %} {% if not comments %}
+  <p>No comments yet..</p>
+  {% endif %}
 </div>
 
-
-{% endblock %}
-
-{% block scripts %}
+{% endblock %} {% block scripts %}
 <script>
-            $('.like-form').submit(function(e){
-                e.preventDefault()
+  $(".like-form").submit(function (e) {
+    e.preventDefault();
 
-                const post_id = $(this).attr('id')
+    const post_id = $(this).attr("id");
 
-                const likeTest = $(`.like-btn${post_id}`).text()
+    const likeTest = $(`.like-btn${post_id}`).text();
 
-                const trim = $.trim(likeTest)
-                console.log(trim)
-                const url = $(this).attr('action')
+    const trim = $.trim(likeTest);
+    console.log(trim);
+    const url = $(this).attr("action");
 
-                let res;
-                const likes = $(`.like-count${post_id}`).text()
-                const trimCount = parseInt(likes)
+    let res;
+    const likes = $(`.like-count${post_id}`).text();
+    const trimCount = parseInt(likes);
 
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: {
-                         'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
-                         'post_id': post_id,
-                    },
-                    success: function(response) {
-                        if(trim == 'Unlike') {
-                            $(`.like-btn${post_id}`).text('Like').css({"color": "black" });
-                            $(`.like-btn${post_id}`).append('<i class="fas fa-thumbs-up"></i>')
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: {
+        csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+        post_id: post_id,
+      },
+      success: function (response) {
+        if (trim == "Unlike") {
+          $(`.like-btn${post_id}`).text("Like").css({ color: "black" });
+          $(`.like-btn${post_id}`).append('<i class="fas fa-thumbs-up"></i>');
 
-                            res = trimCount - 1
-                        } else {
-                            $(`.like-btn${post_id}`).text('Unlike').css({"color": "blue"});
-                            $(`.like-btn${post_id}`).append('<i class=" fas fa-thumbs-up"></i>')
+          res = trimCount - 1;
+        } else {
+          $(`.like-btn${post_id}`).text("Unlike").css({ color: "blue" });
+          $(`.like-btn${post_id}`).append('<i class=" fas fa-thumbs-up"></i>');
 
-                            res = trimCount + 1
-                        }
-                        if (res == 1) {
-                            $(`.like-count${post_id}`).text(res + " " + "like for this post")
-                        } else {
-                            $(`.like-count${post_id}`).text(res + " " + "likes for this post")
-                        }
-
-                    },
-                    error: function(response) {
-                        console.log('error', response)
-                    }
-                })
-    })
-
+          res = trimCount + 1;
+        }
+        if (res == 1) {
+          $(`.like-count${post_id}`).text(res + " " + "like for this post");
+        } else {
+          $(`.like-count${post_id}`).text(res + " " + "likes for this post");
+        }
+      },
+      error: function (response) {
+        console.log("error", response);
+      },
+    });
+  });
 </script>
 {% endblock scripts %}
-
