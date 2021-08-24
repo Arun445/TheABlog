@@ -1,27 +1,34 @@
+h2 {
+  font-weight: normal;
+}
+
 .nav_bar {
-    width: 80%;
+  margin: 0 15em;
 }
 
 .navbar {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
+  padding: 1.2em 0;
+}
 
+.navbar a {
+  font-size: 1.2em;
 }
 
 .navbar button {
-border-radius: 20px;
+  border-radius: 20px;
 }
 
-
 body {
-    background: #fafafa;
-    color: #333333;
-    text-decoration: none;
-    padding-bottom: 30px;
+  background: #fafafa;
+  color: #333333;
+  text-decoration: none;
+  padding-bottom: 30px;
 }
 
 a {
-   text-decoration: none;
-   color: #4169E1;
+  text-decoration: none;
+  color: #4169e1;
 }
 
 .content-section {
@@ -29,250 +36,258 @@ a {
   padding: 10px 2px;
   border: 1px solid #dddddd;
   border-radius: 3px;
-  max-width: 800px;
+
   margin-bottom: 20px;
 }
 
 .comments {
-    max-width: 600px;
-    margin: auto;
-    margin-bottom: 20px;
+  max-width: 600px;
+  margin: auto;
+  margin-bottom: 20px;
 }
 
 .comments-h3 {
-    padding-top: 80px;
+  padding-top: 80px;
 }
 
 .botm {
-    padding-bottom: 30px;
+  padding-bottom: 30px;
 }
 
 .comment-section {
- padding-bottom: 1px;
+  padding-bottom: 1px;
   margin-bottom: 4px;
-  border-top: 1px solid #e3e3e3
+  border-top: 1px solid #e3e3e3;
 }
 
 .listing {
-    width: 50%;
+  width: 40%;
 }
 
 .article-metadata {
   padding-bottom: 1px;
   margin-bottom: 4px;
-  border-bottom: 1px solid #e3e3e3
+  border-bottom: 1px solid #e3e3e3;
 }
 
 .article-title {
-    text-align: center;
-    margin-right: 50px;
+  text-align: center;
+  margin-right: 50px;
   color: #444444;
 }
 
 .article-content {
   white-space: pre-line;
-  text-align:center;
+  text-align: center;
 }
 
 .d-flex {
-    border:solid black 1px;
+  border: solid black 1px;
+  padding: 10px;
+}
+.profile-name {
+  padding: 10px;
+}
+
+.create-btn {
+  padding: 1em 0.5em;
+}
+.new-post-h1 {
+  padding: 0.5em 0.5em 0 0.5em;
 }
 
 .profile-image {
-    height: 100px;
-    width: 100px;
-    border-radius: 40px;
-    border: solid #8FBC8F 3px;
+  height: 100px;
+  width: 100px;
+  border-radius: 40px;
+  border: solid #8fbc8f 3px;
 }
 
 .user-image {
-    height: 50px;
-    width: 50px;
-    border-radius: 40px;
-    border: solid #8FBC8F 1px;
+  height: 50px;
+  width: 50px;
+  border-radius: 40px;
+  border: solid #8fbc8f 1px;
 }
 .user-image-sm {
-    height: 20px;
-    width: 20px;
-    border-radius: 40px;
-    border: solid #8FBC8F 1px;
+  height: 20px;
+  width: 20px;
+  border-radius: 40px;
+  border: solid #8fbc8f 1px;
 }
 
 .user-image-bg {
-    margin: auto;
-    height: 200px;
-    width: 200px;
-    border-radius: 100px;
-    border: solid #8FBC8F;
+  margin: auto;
+  height: 200px;
+  width: 200px;
+  border-radius: 100px;
+  border: solid #8fbc8f;
 }
 
 .user-nav-image {
-    height: 40px;
-    width: 40px;
-    border-radius: 40px;
-    border: solid #8FBC8F 1px;
+  height: 45px;
+  width: 45px;
+  border-radius: 40px;
+  border: solid #8fbc8f 1px;
 }
 
-
 .sign-up-form {
-    text-align:center;
+  text-align: center;
 
-    padding-top:20px;
-    margin: auto;
-    max-width: 80%;
+  padding-top: 20px;
+  margin: auto;
+  max-width: 80%;
 }
 
 .log-in {
-    text-align:center;
-    padding-top:20px;
-    margin: auto;
-    max-width: 60%;
+  text-align: center;
+  padding-top: 20px;
+  margin: auto;
+  max-width: 60%;
 }
 
 .log-in input {
-
- padding: 10px;
+  padding: 10px;
 }
 
 .form-group {
-
-text-align: left;
+  text-align: left;
+  padding: 1.2em 1.2em 0 1.2em;
+}
+.profile-info {
+  text-align: left;
+  padding: 0.5em 0.8em;
+}
+.password-info {
+  text-align: left;
+  padding: 0.5em 1.2em;
+}
+.button-profile {
+  padding: 1em 0.7em 0.5em 0.7em;
 }
 
 .log_in_btn {
-
-    padding: 10px;
-    border-radius: 40px;
-    width:80%;
-
-
+  padding: 10px;
+  border-radius: 40px;
+  width: 80%;
 }
 .up {
-    padding-top: 20px;
+  padding-top: 20px;
 }
 
 .dropdown {
-    padding-left: 50px;
+  padding-left: 50px;
 }
 
 .sign-up button {
-    background: #A52A2A;
-
+  background: #a52a2a;
 }
 
 .sign-up button:hover {
-    background: #C60606;
+  background: #c60606;
 }
 
 .sign-in button {
-color: white
+  color: white;
 }
 
 .sign-in button:hover {
-    color:#B0E0E6;
+  color: #b0e0e6;
 }
 
 .thumbs-up {
-    color: blue;
+  color: blue;
 }
 .thumbs-down {
-    color: black;
+  color: black;
 }
 
 .like {
-    background-color: transparent !important;
-    border: solid black 0px;
+  background-color: transparent !important;
+  border: solid black 0px;
 }
 
 .fas {
-    padding-left: 10px;
-
+  padding-left: 10px;
 }
 
 button a {
-    color: white;
+  color: white;
 }
 button a:hover {
-    color: grey;
+  color: grey;
 }
 
-
 .dropdown-detail {
-    float:right;
+  float: right;
 }
 
 .red {
-    color:red;
-
+  color: red;
 }
-
 
 .fa-ellipsis-h {
-    color:black;
-
+  color: black;
 }
 
-.h1-center, .h5-center {
-    text-align:center;
+.h1-center,
+.h5-center {
+  text-align: center;
 }
-
-
-
 
 .margins-c {
-    float:right;
-    margin-right: 10px;
-    padding-bottom: 8px;
-
+  float: right;
+  margin-right: 10px;
+  padding-bottom: 8px;
 }
 
 .margins-l {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 .comment-sections {
-    border-top: 1px solid #e3e3e3;
-    padding: 10px 20px 0px 0px;
+  border-top: 1px solid #e3e3e3;
+  padding: 10px 20px 0px 0px;
 }
 
-
-
 .card {
-    margin:auto;
+  margin: auto;
 }
 
 .margins-top {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .comment-box {
-    display: none;
-    margin-top: 10px;
+  display: none;
+  margin-top: 10px;
 }
 
 .narrow-select {
-    margin-left: 10px;
-    width: 87%;
+  margin-left: 10px;
+  width: 87%;
 }
 
 .margins-cs {
-
-    float:right;
-
+  float: right;
 }
 
 .comment-sectionas {
- padding-bottom: 1px;
+  padding-bottom: 1px;
   margin-bottom: 4px;
-
 }
 
 .pagination {
-    padding-top: 20px;
-    margin:auto;
+  padding-top: 20px;
+  margin: auto;
 }
 
 .detail-like {
+  padding-bottom: 30px;
+}
 
-    padding-bottom: 30px;
+.btn-primary {
+  margin-left: 10px;
+  padding: 10px 20px;
+  font-size: 15px;
 }
