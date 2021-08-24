@@ -16,7 +16,9 @@
             <p class="card-text h5-center">{{ users.userprofile.about }}</p>
           {% endif %}
         </div>
-         <img src="{{users.userprofile.user_image.url}}" class="user-image-bg" alt="...">
+        <div class='card-image'>
+            <img src="{{users.userprofile.user_image.url}}" class="user-image-bg" alt="...">
+        </div>
     </div>
 </div>
 
@@ -60,7 +62,7 @@
         </div>
     {% endfor %}
 
-    <!-- PAGINATION ------------->
+    <!-- PAGINATION -->
 
     {% if page_obj.has_other_pages %}
         <div class="col-12 pagination">

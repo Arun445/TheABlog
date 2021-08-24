@@ -124,6 +124,12 @@ a {
   border-radius: 100px;
   border: solid #8fbc8f;
 }
+.card-image {
+  display: flex;
+  place-content: center;
+  padding: 1em;
+  
+}
 
 .user-nav-image {
   height: 45px;
